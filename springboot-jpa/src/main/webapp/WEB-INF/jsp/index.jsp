@@ -51,7 +51,8 @@
 				</table>
 			</c:when>
 			<c:when test="${mode =='PD_EDIT'}">
-				<form>
+				<form action="save" method="POST">
+					<input type="hidden" name="id" id="id" value="${product.id}">
 					<div class="form-group">
 						<label>Product Name</label>
 						<input type="text" id="productName" name="productName" value="${product.productName}" class="form-control">

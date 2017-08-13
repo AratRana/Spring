@@ -22,4 +22,8 @@ public class ProductService {
 		return productRepository.findOne(id);
 	}
 
+	public void update(Product product) {
+		productRepository.save(product);
+	}
+
 }
