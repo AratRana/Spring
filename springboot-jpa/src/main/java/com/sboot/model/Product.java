@@ -16,7 +16,8 @@ public class Product {
 	@Column(name = "product_name")
 	private String productName;
 
-	private String brand;
+	@Column(name = "brand")
+	private String brandName;
 
 	private Double price;
 
@@ -36,12 +37,12 @@ public class Product {
 		this.productName = productName;
 	}
 
-	public String getBrand() {
-		return brand;
+	public String getBrandName() {
+		return brandName;
 	}
 
 	public void setBrandName(String brandName) {
-		this.brand = brandName;
+		this.brandName = brandName;
 	}
 
 	public Double getPrice() {

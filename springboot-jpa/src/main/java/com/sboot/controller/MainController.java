@@ -43,4 +43,16 @@ public class MainController {
 		productService.update(product);
 		response.sendRedirect("/");
 	}
+
+	@GetMapping("/newProduct")
+	public String newProduct(HttpServletRequest request) {
+		request.setAttribute("mode", "PD_NEW");
+		return "index";
+	}
+
+	@GetMapping("/delete")
+	public void deleteProduct(@RequestParam Long id, HttpServletResponse response) throws IOException {
+		productService.deletProduct(id);
+		response.sendRedirect("/");
+	}
 }
