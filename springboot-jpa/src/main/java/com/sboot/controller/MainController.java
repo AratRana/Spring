@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sboot.model.Product;
+import com.sboot.properties.AppProperties;
 import com.sboot.service.ProductService;
 
 @Controller
@@ -21,12 +22,19 @@ public class MainController {
 
 	@Autowired
 	private ProductService productService;
+	
+	private AppProperties app;
+	@Autowired
+    public void setApp(AppProperties app) {
+        this.app = app;
+    }
 
 	@GetMapping("/")
 	public String index(HttpServletRequest request) {
 		request.setAttribute("mode", "PD_VIEW");
 		Collection<Product> products = productService.findAll();
 		request.setAttribute("products", products);
+		request.setAttribute("appProperties",app.toString());
 		return "index";
 	}
 

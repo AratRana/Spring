@@ -53,6 +53,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				<%-- <c:out value="${appProperties}"></c:out> --%>
 			</c:when>
 			<c:when test="${mode =='PD_EDIT' || mode == 'PD_NEW'}">
 				<form action="save" method="POST">
