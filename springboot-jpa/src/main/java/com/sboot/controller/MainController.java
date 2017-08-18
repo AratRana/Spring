@@ -30,37 +30,47 @@ public class MainController {
     }
 
 	@GetMapping("/")
-	public String index(HttpServletRequest request) {
+	public void index(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		response.sendRedirect("home");
+	}
+	@GetMapping("/home")
+	public String home(HttpServletRequest request) {
 		request.setAttribute("mode", "PD_VIEW");
 		Collection<Product> products = productService.findAll();
 		request.setAttribute("products", products);
-		request.setAttribute("appProperties",app.toString());
-		return "index";
+		return "home";
 	}
 
 	@GetMapping("/editProduct")
 	public String editProduct(@RequestParam Long id, HttpServletRequest request) {
 		request.setAttribute("product", productService.findOne(id));
 		request.setAttribute("mode", "PD_EDIT");
-		return "index";
+		return "home";
 	}
 
 	@PostMapping("/save")
 	public void updateProduct(@ModelAttribute Product product, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		productService.update(product);
-		response.sendRedirect("/");
+		response.sendRedirect("home");
 	}
 
 	@GetMapping("/newProduct")
 	public String newProduct(HttpServletRequest request) {
 		request.setAttribute("mode", "PD_NEW");
-		return "index";
+		return "home";
 	}
 
 	@GetMapping("/delete")
 	public void deleteProduct(@RequestParam Long id, HttpServletResponse response) throws IOException {
 		productService.deletProduct(id);
-		response.sendRedirect("/");
+		response.sendRedirect("home");
+	}
+	
+	@GetMapping("/prop")
+	public String showProperties(HttpServletRequest request) {
+		request.setAttribute("mode", "PROP_VIEW");
+		request.setAttribute("appProperties",app.toString());	
+		return "home";
 	}
 }
