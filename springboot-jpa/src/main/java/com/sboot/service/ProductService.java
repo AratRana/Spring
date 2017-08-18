@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;*/
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.sboot.model.Product;
@@ -17,9 +18,6 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
-	/*@Autowired
-	private EntityManagerFactory entityManagerFactory;*/
 
 	public Collection<Product> findAll() {
 		return (Collection<Product>) productRepository.findAll();
@@ -27,14 +25,6 @@ public class ProductService {
 
 	public Product findOne(Long id) {
 		return productRepository.findOne(id);
-		/*EntityManager entityManager = entityManagerFactory.createEntityManager();
-		Product prod = new Product();
-		Object[] obj = (Object[]) entityManager.createNativeQuery("Select *from product where id=:id").setParameter("id", id).getSingleResult();
-		prod.setId(Long.parseLong(obj[0].toString()));
-		prod.setBrandName(obj[1].toString());
-		prod.setProductName(obj[3].toString());
-		prod.setPrice(Double.parseDouble(obj[2].toString()));
-		return prod;*/
 	}
 
 	public void update(Product product) {
@@ -45,4 +35,14 @@ public class ProductService {
 		productRepository.delete(id);
 	}
 
+	/*
+	 * With jdbcTemplate
+	 */
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	public Product findById(Long id) {
+		return jdbcTemplate.query("select *from product where id=?", new Object[] { id }, new ProductWrapper()).get(0);
+	}
 }
