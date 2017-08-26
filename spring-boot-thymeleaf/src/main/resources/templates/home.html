@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">JDA</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="home">Products</a></li>
+				<li><a th:href="newProduct">New Product</a></li>
+				<li><a th:href="prop">Properties</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<table class="table table-hover" th:if="${mode == 'PD_VIEW'}">
+			<thead>
+				<tr>
+					<th>Product Name</th>
+					<th>Brand</th>
+					<th>Price</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${products}">
+					<td th:text="${item.productName}" />
+					<td th:text="${item.brandName}" />
+					<td th:text="${item.price}" />
+					<td><a th:href="@{'editProduct?'(id=${item.id})}"><span
+							class="glyphicon glyphicon-edit"></span></a></td>
+					<td><a th:href="@{'delete?'(id=${item.id})}"><span
+							class="glyphicon glyphicon-trash"></span></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<form action="save" method="POST"
+			th:if="${mode == 'PD_EDIT' || mode == 'PD_NEW'}">
+			<input type="hidden" name="id" id="id" th:value="${product.id}" />
+			<div class="form-group">
+				<label for="productName">Product Name</label> <input type="text"
+					id="productName" name="productName"
+					th:value="${product.productName}" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="brandName">Brand</label> <input type="text"
+					id="brandName" name="brandName" th:value="${product.brandName}"
+					class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="price">Price</label> <input type="text" id="price"
+					name="price" th:value="${product.price}" class="form-control" />
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		<p th:if="${mode == 'PROP_VIEW'}" th:text="${appProperties}" />
+	</div>
+
+</body>
+</html>
